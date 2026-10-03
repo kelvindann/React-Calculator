@@ -13,7 +13,6 @@ function App() {
     "0", "C", "=", "+"
   ];
 
-  // Handle number buttons
   const handleNumber = (number) => {
     if (display === "Error") {
       setDisplay(number);
@@ -28,7 +27,6 @@ function App() {
     }
   };
 
-  // Handle operator buttons
   const handleOperator = (selectedOperator) => {
     const currentNumber = Number(display);
 
@@ -37,7 +35,6 @@ function App() {
     setWaitingForSecondNumber(true);
   };
 
-  // Calculate result
   const calculate = () => {
     if (firstNumber === null || operator === null) {
       return;
@@ -80,7 +77,6 @@ function App() {
     setWaitingForSecondNumber(false);
   };
 
-  // Clear calculator
   const handleClear = () => {
     setDisplay("0");
     setFirstNumber(null);
@@ -88,7 +84,6 @@ function App() {
     setWaitingForSecondNumber(false);
   };
 
-  // Handle all buttons
   const handleButtonClick = (button) => {
     if (!isNaN(button)) {
       handleNumber(button);
@@ -102,44 +97,71 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex items-center justify-center p-4">
 
       <div className="w-full max-w-sm">
 
         {/* Title */}
-        <h1 className="text-3xl font-bold text-center mb-6">
+        <h1 className="text-4xl font-extrabold text-center text-blue-700 mb-6">
           Calculator
         </h1>
 
         {/* Calculator */}
-        <div className="bg-white rounded-2xl shadow-lg p-5">
+        <div className="bg-white rounded-3xl shadow-2xl p-5 border border-white">
 
           {/* Display */}
-          <div className="bg-gray-900 text-white rounded-xl p-5 mb-4 text-right">
-            <div className="text-4xl font-semibold overflow-hidden">
+          <div className="bg-gradient-to-r from-gray-900 to-gray-700 text-white rounded-2xl p-5 mb-5 text-right shadow-inner">
+            <div className="text-4xl font-bold overflow-hidden">
               {display}
             </div>
           </div>
 
-          {/* Calculator Buttons */}
+          {/* Buttons */}
           <div className="grid grid-cols-4 gap-3">
-            {buttons.map((button) => (
-              <button
-                key={button}
-                onClick={() => handleButtonClick(button)}
-                className="h-16 rounded-xl bg-gray-200 text-xl font-semibold hover:bg-gray-300 active:scale-95 transition"
-              >
-                {button}
-              </button>
-            ))}
+
+            {buttons.map((button) => {
+
+              const isOperator = ["+", "−", "×", "÷"].includes(button);
+              const isClear = button === "C";
+              const isEquals = button === "=";
+
+              let buttonStyle =
+                "bg-blue-100 text-blue-800 hover:bg-blue-200";
+
+              if (isOperator) {
+                buttonStyle =
+                  "bg-purple-500 text-white hover:bg-purple-600";
+              }
+
+              if (isClear) {
+                buttonStyle =
+                  "bg-red-500 text-white hover:bg-red-600";
+              }
+
+              if (isEquals) {
+                buttonStyle =
+                  "bg-green-500 text-white hover:bg-green-600";
+              }
+
+              return (
+                <button
+                  key={button}
+                  onClick={() => handleButtonClick(button)}
+                  className={`h-16 rounded-2xl text-xl font-bold shadow-md ${buttonStyle} active:scale-95 transition`}
+                >
+                  {button}
+                </button>
+              );
+            })}
+
           </div>
 
         </div>
 
         {/* User Guide */}
-        <div className="bg-white rounded-2xl shadow-lg p-5 mt-5">
+        <div className="bg-white rounded-3xl shadow-xl p-5 mt-5">
 
-          <h2 className="text-xl font-bold mb-3">
+          <h2 className="text-xl font-bold text-blue-700 mb-3">
             How to Use
           </h2>
 
@@ -151,25 +173,25 @@ function App() {
             <li>Click C to clear and reset the calculator.</li>
           </ol>
 
-          <h2 className="text-xl font-bold mt-5 mb-3">
+          <h2 className="text-xl font-bold text-purple-700 mt-5 mb-3">
             Supported Operations
           </h2>
 
           <div className="space-y-2 text-gray-700">
             <p>
-              <strong>+</strong> Addition
+              <strong className="text-purple-600">+</strong> Addition
             </p>
 
             <p>
-              <strong>−</strong> Subtraction
+              <strong className="text-purple-600">−</strong> Subtraction
             </p>
 
             <p>
-              <strong>×</strong> Multiplication
+              <strong className="text-purple-600">×</strong> Multiplication
             </p>
 
             <p>
-              <strong>÷</strong> Division
+              <strong className="text-purple-600">÷</strong> Division
             </p>
           </div>
 
